@@ -4,10 +4,11 @@
  */
 package Tienda_kendal.demo.repository;
 
-/**
- *
- * @author lopez
- */
-public interface ProductoRepository {
+import Tienda_kendal.demo.domain.Producto;
+import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ProductoRepository extends JpaRepository<Producto, Integer> {
     
+     public List<Producto> findByActivoTrue();
 }
