@@ -1,0 +1,5 @@
+# Firebase
+google-services.json
+serviceAccountKey.json
+.env
+.env.local
