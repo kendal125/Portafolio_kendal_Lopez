@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Tienda_kendal.demo;
-/*
+
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
@@ -16,13 +16,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
 @Configuration
-*/
 public class StorageConfig {
-    /*
-    @Value("${firebase_json_path}")
+
+    @Value("${firebase.json.path}")
     private String jsonPath;
 
-    @Value("${firebase_json_file}")
+    @Value("${firebase.json.file}")
     private String jsonFile;
 
     @Bean
@@ -32,5 +31,6 @@ public class StorageConfig {
             GoogleCredentials credentials = GoogleCredentials.fromStream(inputStream);
             return StorageOptions.newBuilder().setCredentials(credentials).build().getService();
         }
-    }*/
+    }
+
 }

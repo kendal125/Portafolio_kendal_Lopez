@@ -1,15 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Tienda_kendal.demo.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.io.Serializable;
@@ -20,7 +11,6 @@ import lombok.Data;
 @Table(name = "categoria")
 public class Categoria implements Serializable {
 
-    // Se recomienda añadir un serialVersionUID
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -39,5 +29,4 @@ public class Categoria implements Serializable {
 
     @Column(name = "activo")
     private Boolean activo;
-
 }
