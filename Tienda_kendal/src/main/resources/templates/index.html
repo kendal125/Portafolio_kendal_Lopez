@@ -1,20 +1,37 @@
 <!DOCTYPE html>
-<!-- Esta es la página principal del sitio web TechShop -->
-<html>
-    <head th:replace="~{general/fragmentos :: head}"/>
-
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
+
     <head th:replace="~{general/fragmentos :: head}">
         <title>TechShop</title>
     </head>
-    <body>
-        <header th:replace="~{general/fragmentos :: header}"/>
 
-        
-        <section th:replace="~{categoria/fragmentos :: agregar}"/>
-        <section th:replace="~{categoria/fragmentos :: listado}"/>
-        
-        <footer th:replace="~{general/fragmentos :: footer}"/>
+    <body>
+
+        <!-- HEADER -->
+        <header th:replace="~{general/fragmentos :: header}"></header>
+
+        <!-- MENSAJES / TOAST -->
+        <section th:replace="~{general/fragmentos :: mostrarToast}"></section>
+
+        <!-- TITULO PRINCIPAL -->
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col text-center">
+                    <h1>[[#{plantilla.suTienda}]]</h1>
+                    <p class="lead">Bienvenido a la página principal de Tienda Kendal.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TABS DE CATEGORÍAS -->
+        <section th:replace="~{consultas/fragmentos :: tabs}"></section>
+
+        <!-- TARJETAS DE PRODUCTOS -->
+        <section th:replace="~{consultas/fragmentos :: tarjetas}"></section>
+
+        <!-- FOOTER -->
+        <footer th:replace="~{general/fragmentos :: footer}"></footer>
+
     </body>
 </html>
