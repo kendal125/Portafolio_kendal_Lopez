@@ -3,242 +3,227 @@
       xmlns:th="http://www.thymeleaf.org"      
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
-    <head th:fragment="head">
-        <title>TechShop</title>
-        <meta charset="UTF-8"/>
-        <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
-        <link th:href="@{/webjars/font-awesome/css/all.css}" rel="stylesheet"/>
-        <script th:src="@{/js/rutinas.js}"></script>
-        <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-        <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-        <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-    </head>
+<head th:fragment="head">
+    <title>TechShop</title>
+    <meta charset="UTF-8"/>
 
-    <body>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/fav/favicon-16x16.png"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="/fav/favicon-32x32.png"/>
+    <link rel="icon" type="image/png" sizes="96x96" href="/fav/favicon-96x96.png"/>
+    <link rel="icon" type="image/png" sizes="256x256" href="/fav/favicon-256x256.png"/>
 
-        <header th:fragment="header" class="header">
+    <!-- CSS -->
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/webjars/font-awesome/css/all.css}" rel="stylesheet"/>
+    <link th:href="@{/css/estilos.css}" rel="stylesheet"/>
 
-            <nav class="navbar navbar-expand-sm p-0">
-                <div class="container">
+    <!-- JS -->
+    <script th:src="@{/js/rutinas.js}"></script>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 
-                    <a th:href="@{/}" class="navbar-brand">[[#{aplicacion.titulo}]]</a>
+    <!-- CSRF -->
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
 
-                    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+<body>
 
-                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+<header th:fragment="header" class="header d-print-none">
 
-                        <!-- MENU -->
-                        <ul class="navbar-nav">
+    <nav class="navbar navbar-expand-sm p-0">
+        <div class="container">
 
-                            <li class="nav-item px-2">
-                                <a class="nav-link" th:href="@{/categoria/listado}">
-                                    [[#{plantilla.categorias}]]
+            <a th:href="@{/}" class="navbar-brand">[[#{aplicacion.titulo}]]</a>
+
+            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+
+                <!-- MENU -->
+                <ul class="navbar-nav" sec:authorize="hasRole('ROLE_VENDEDOR') or hasRole('ROLE_ADMIN')">
+
+                    <li class="nav-item px-2">
+                        <a class="nav-link" th:href="@{/categoria/listado}">
+                            [[#{plantilla.categorias}]]
+                        </a>
+                    </li>
+
+                    <li class="nav-item px-2">
+                        <a class="nav-link" th:href="@{/producto/listado}">
+                            [[#{plantilla.productos}]]
+                        </a>
+                    </li>
+
+                    <li class="nav-item px-2">
+                        <a class="nav-link" th:href="@{/consultas/listado}">
+                            [[#{plantilla.consultas}]]
+                        </a>
+                    </li>
+
+                    <!-- ADMIN -->
+                    <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+
+                        <a class="nav-link dropdown-toggle"
+                           data-bs-toggle="dropdown"
+                           href="#"
+                           role="button">
+                            [[#{plantilla.admin}]]
+                        </a>
+
+                        <ul class="dropdown-menu">
+
+                            <li>
+                                <a class="dropdown-item"
+                                   th:href="@{/usuario/listado}">
+                                    [[#{plantilla.usuarios}]]
                                 </a>
                             </li>
 
-                            <li class="nav-item px-2">
-                                <a class="nav-link" th:href="@{/producto/listado}">
-                                    [[#{plantilla.productos}]]
-                                </a>
-                            </li>
+                            <li class="submenu submenu-md dropend">
 
-                            <!-- CONSULTAS CORREGIDO -->
-                            <li class="nav-item px-2">
-                                <a class="nav-link" th:href="@{/consultas/listado}">
-                                    [[#{plantilla.consultas}]]
-                                </a>
-                            </li>
-
-                            <!-- EXTRAS -->
-                            <li class="nav-item dropdown">
-
-                                <a class="nav-link dropdown-toggle"
+                                <a class="dropdown-item dropdown-toggle"
                                    data-bs-toggle="dropdown"
-                                   href="#"
-                                   role="button"
-                                   aria-expanded="false">
-                                    [[#{plantilla.extras}]]
+                                   onclick="event.stopPropagation();">
+                                    [[#{plantilla.seguridad}]]
                                 </a>
 
                                 <ul class="dropdown-menu">
 
                                     <li>
                                         <a class="dropdown-item"
-                                           th:href="@{/pruebas/listado}">
-                                            [[#{plantilla.asociaciones}]]
+                                           th:href="@{/role/listado}">
+                                            [[#{plantilla.troles}]]
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a class="dropdown-item"
+                                           th:href="@{/usuario_role/asignar}">
+                                            [[#{plantilla.permisos}]]
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a class="dropdown-item"
+                                           th:href="@{/ruta/listado}">
+                                            [[#{plantilla.rutas}]]
                                         </a>
                                     </li>
 
                                 </ul>
                             </li>
 
-                            <!-- ADMIN -->
-                            <li class="nav-item dropdown">
-
-                                <a class="nav-link dropdown-toggle"
-                                   data-bs-toggle="dropdown"
-                                   href="#"
-                                   role="button"
-                                   aria-expanded="false">
-                                    [[#{plantilla.admin}]]
+                            <li>
+                                <a class="dropdown-item"
+                                   th:href="@{/constante/listado}">
+                                    [[#{plantilla.constantes}]]
                                 </a>
-
-                                <ul class="dropdown-menu">
-
-                                    <li>
-                                        <a class="dropdown-item"
-                                           th:href="@{/usuario/listado}">
-                                            [[#{plantilla.usuarios}]]
-                                        </a>
-                                    </li>
-
-                                    <li class="submenu submenu-md dropend">
-
-                                        <a class="dropdown-item dropdown-toggle"
-                                           role="button"
-                                           data-bs-toggle="dropdown"
-                                           aria-expanded="false"
-                                           onclick="event.stopPropagation();">
-                                            [[#{plantilla.seguridad}]]
-                                        </a>
-
-                                        <ul class="dropdown-menu">
-
-                                            <li>
-                                                <a class="dropdown-item"
-                                                   th:href="@{/role/listado}">
-                                                    [[#{plantilla.troles}]]
-                                                </a>
-                                            </li>
-
-                                            <li>
-                                                <a class="dropdown-item"
-                                                   th:href="@{/usuario_role/asignar}">
-                                                    [[#{plantilla.permisos}]]
-                                                </a>
-                                            </li>
-
-                                            <li>
-                                                <a class="dropdown-item"
-                                                   th:href="@{/ruta/listado}">
-                                                    [[#{plantilla.rutas}]]
-                                                </a>
-                                            </li>
-
-                                        </ul>
-                                    </li>
-
-                                    <li>
-                                        <a class="dropdown-item"
-                                           th:href="@{/constante/listado}">
-                                            [[#{plantilla.constantes}]]
-                                        </a>
-                                    </li>
-
-                                </ul>
                             </li>
 
                         </ul>
+                    </li>
 
-                        <!-- IDIOMAS -->
-                        <ul class="navbar-nav">
+                </ul>
 
-                            <li class="nav-item dropdown">
+                <!-- IDIOMAS -->
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle"
+                           data-bs-toggle="dropdown"
+                           href="#">
+                            [[#{plantilla.idioma}]]
+                        </a>
 
-                                <a class="nav-link dropdown-toggle"
-                                   data-bs-toggle="dropdown"
-                                   href="#"
-                                   role="button"
-                                   aria-expanded="false">
-                                    [[#{plantilla.idioma}]]
-                                </a>
-
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" th:href="@{/(lang=es)}">Español</a></li>
-                                    <li><a class="dropdown-item" th:href="@{/(lang=en)}">English</a></li>
-                                    <li><a class="dropdown-item" th:href="@{/(lang=fr)}">Française</a></li>
-                                    <li><a class="dropdown-item" th:href="@{/(lang=pt)}">Portugaise</a></li>
-                                </ul>
-
-                            </li>
-
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" th:href="@{/(lang=es)}">Español</a></li>
+                            <li><a class="dropdown-item" th:href="@{/(lang=en)}">English</a></li>
+                            <li><a class="dropdown-item" th:href="@{/(lang=fr)}">Française</a></li>
+                            <li><a class="dropdown-item" th:href="@{/(lang=pt)}">Portugaise</a></li>
                         </ul>
+                    </li>
+                </ul>
 
-                        <div id="resultBlock"></div>
+                <!-- CARRITO -->
+                <div id="resultBlock"></div>
 
-                    </div>
-                </div>
-            </nav>
+                <!-- LOGIN -->
+                <ul class="navbar-nav" sec:authorize="!isAuthenticated()">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/login}">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </a>
+                    </li>
+                </ul>
 
-            <section id="main-header" class="py-2 bg-success text-white">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h1>
-                                <i class="fas fa-cog"></i>
-                                [[#{plantilla.suTienda}]]
-                            </h1>
-                        </div>
-                    </div>
-                </div>
-            </section>
+                <!-- USUARIO -->
+                <ul class="navbar-nav" sec:authorize="isAuthenticated()">
 
-        </header>
+                    <li class="nav-item my-auto">
+                        <a class="nav-link">
+                            <img th:src="@{${session.imagenUsuario}}" 
+                                 height="40"
+                                 class="rounded-circle"/>
+                            <span sec:authentication="name" class="ms-1"></span>
+                        </a>
+                    </li>
 
-        <section th:fragment="mostrarToast">
-
-            <div aria-live="polite"
-                 aria-atomic="true"
-                 class="position-fixed top-50 start-50 translate-middle"
-                 style="z-index:1080;">
-
-                <div th:if="${error}" class="toast show">
-
-                    <div class="toast-header text-white bg-danger">
-                        <i class="fa-solid fa-bomb"></i>
-                        <strong class="me-auto">[[#{error}]]</strong>
-                    </div>
-
-                    <div class="toast-body">
-                        <p>[[${error}]]</p>
-                        <div class="mt-2 pt-2 border-top text-center">
-                            <button class="btn btn-secondary btn-sm" data-bs-dismiss="toast">
-                                [[#{accion.cerrar}]]
+                    <li class="nav-item my-auto">
+                        <form method="post" th:action="@{/logout}">
+                            <button class="btn nav-link" type="submit">
+                                <i class="fas fa-sign-out-alt"></i> Logout
                             </button>
-                        </div>
-                    </div>
+                        </form>
+                    </li>
 
-                </div>
-
-                <div th:if="${todoOk}" class="toast show">
-
-                    <div class="toast-header text-white bg-success">
-                        <i class="fa-solid fa-square-check"></i>
-                        <strong class="me-auto">[[#{atencion}]]</strong>
-                    </div>
-
-                    <div class="toast-body">
-                        <p>[[${todoOk}]]</p>
-                        <div class="mt-2 pt-2 border-top text-center">
-                            <button class="btn btn-secondary btn-sm" data-bs-dismiss="toast">
-                                [[#{accion.cerrar}]]
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
+                </ul>
 
             </div>
+        </div>
+    </nav>
 
-        </section>
+    <!-- HEADER -->
+    <section id="main-header" class="py-2 bg-success text-white">
+        <div class="container">
+            <h1><i class="fas fa-cog"></i> [[#{plantilla.suTienda}]]</h1>
+        </div>
+    </section>
 
-        <footer th:fragment="footer" class="p-2 mt-5 bg-info text-white">
-            <p class="lead text-center">
-                [[#{plantilla.derechos}]] &COPY;
-            </p>
-        </footer>
+</header>
 
-    </body>
+<!-- TOAST -->
+<section th:fragment="mostrarToast">
+    <div class="position-fixed top-50 start-50 translate-middle" style="z-index:1080;">
+
+        <div th:if="${error}" class="toast show">
+            <div class="toast-header bg-danger text-white">
+                <strong>[[#{error}]]</strong>
+            </div>
+            <div class="toast-body">
+                [[${error}]]
+            </div>
+        </div>
+
+        <div th:if="${todoOk}" class="toast show">
+            <div class="toast-header bg-success text-white">
+                <strong>[[#{atencion}]]</strong>
+            </div>
+            <div class="toast-body">
+                [[${todoOk}]]
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer th:fragment="footer" class="p-2 mt-5 bg-info text-white d-print-none">
+    <p class="text-center">[[#{plantilla.derechos}]] &COPY;</p>
+</footer>
+
+</body>
 </html>

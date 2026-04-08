@@ -1,48 +1,32 @@
 body {
-    background-color: bisque;
-    font-family: serif;
+    background-color: #f8f9fa; /* fondo suave tipo Bootstrap */
+    font-family: Arial, Helvetica, sans-serif;
 }
 
+/* HEADER: deja que Bootstrap maneje el color */
 header {
-    position: fixed;
-    background-color: #6666FF;
-    top: 0;
-    left: 0;
     width: 100%;
-    height: 90px;
-    padding: 10px;
 }
 
+/* ELIMINAMOS aside fijo (Bootstrap maneja layout) */
 aside {
-    position: fixed;  
-    background-color: #99FF99;
-    top: 110px;
-    left: 0;
-    width: 20%;
-    bottom: 20px;
     padding: 10px;
-}
-section {
-    position: fixed;  
-    background-color: #dd8295;
-    top: 110px;
-    left: 20%;
-    width: 80%;
-    bottom: 20px;
-    padding: 10px;
-    overflow-y: scroll;
-}
-footer {
-    position: fixed;  
-    background-color: black;
-    color: white;    
-    left: 0;
-    width: 100%;
-    height: 20px;
-    bottom: 0;
-    text-align: center;
 }
 
+/* SECTION limpio */
+section {
+    padding: 20px;
+}
+
+/* FOOTER normal */
+footer {
+    background-color: #0dcaf0; /* similar a bg-info */
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+/* NAV */
 nav {
    display: flex;
    justify-content: space-between;
@@ -50,17 +34,17 @@ nav {
 }
 
 .logo {
-    font-size: 30px;
+    font-size: 28px;
     font-weight: bold;
     font-family: cursive;
-    line-height: 90px;
 }
 
+/* links */
 .nav-link {
     text-decoration: none;
-    color: white;
 }
 
+/* menú */
 .nav-menu {
     list-style: none;
     display: flex;
@@ -68,21 +52,58 @@ nav {
 }
 
 .nav-menu-item {
-    font-size: 22px;
+    font-size: 18px;
     margin: 0 10px;
-    line-height: 90px;
 }
 
+/* botón tipo menú */
 .menu-item {
-    padding: 5px;
-    background-color: green;
-    border-radius: 10px;
+    padding: 5px 10px;
+    background-color: #198754; /* verde Bootstrap */
+    border-radius: 8px;
+    color: white;
 }
 
 .menu-item:hover {
-    background-color: black;
+    background-color: #145c32;
 }
 
+/* CARDS (efecto moderno) */
+.card {
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
+.card:hover {
+    transform: scale(1.04);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
 
+/* IMÁGENES */
+.card img {
+    object-fit: contain;
+}
 
+/* PRINT */
+@media print {
+    thead {
+        display: table-header-group;
+    }
+
+    tr {
+        page-break-inside: avoid;
+    }
+    
+    table {
+        margin: 0 !important;
+    }
+    
+    .card, .card-body {
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    .d-print-none, .navbar, footer {
+        display: none !important;
+    }
+}
