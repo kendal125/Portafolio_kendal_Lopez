@@ -7,24 +7,20 @@
     <title>TechShop</title>
     <meta charset="UTF-8"/>
 
-    <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="16x16" href="/fav/favicon-16x16.png"/>
     <link rel="icon" type="image/png" sizes="32x32" href="/fav/favicon-32x32.png"/>
     <link rel="icon" type="image/png" sizes="96x96" href="/fav/favicon-96x96.png"/>
     <link rel="icon" type="image/png" sizes="256x256" href="/fav/favicon-256x256.png"/>
 
-    <!-- CSS -->
     <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
     <link th:href="@{/webjars/font-awesome/css/all.css}" rel="stylesheet"/>
     <link th:href="@{/css/estilos.css}" rel="stylesheet"/>
 
-    <!-- JS -->
     <script th:src="@{/js/rutinas.js}"></script>
     <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
     <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 
-    <!-- CSRF -->
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 </head>
@@ -71,7 +67,8 @@
                         <a class="nav-link dropdown-toggle"
                            data-bs-toggle="dropdown"
                            href="#"
-                           role="button">
+                           role="button"
+                           aria-expanded="false">
                             [[#{plantilla.admin}]]
                         </a>
 
@@ -88,6 +85,8 @@
 
                                 <a class="dropdown-item dropdown-toggle"
                                    data-bs-toggle="dropdown"
+                                   role="button"
+                                   aria-expanded="false"
                                    onclick="event.stopPropagation();">
                                     [[#{plantilla.seguridad}]]
                                 </a>
@@ -103,7 +102,7 @@
 
                                     <li>
                                         <a class="dropdown-item"
-                                           th:href="@{/usuario_role/asignar}">
+                                           th:href="@{/usuario_rol/mantenimiento}">
                                             [[#{plantilla.permisos}]]
                                         </a>
                                     </li>
@@ -135,7 +134,9 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle"
                            data-bs-toggle="dropdown"
-                           href="#">
+                           href="#"
+                           role="button"
+                           aria-expanded="false">
                             [[#{plantilla.idioma}]]
                         </a>
 
@@ -155,7 +156,8 @@
                 <ul class="navbar-nav" sec:authorize="!isAuthenticated()">
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/login}">
-                            <i class="fas fa-sign-in-alt"></i> Login
+                            <i class="fas fa-sign-in-alt"></i>
+                            <span class="ms-1">Login</span>
                         </a>
                     </li>
                 </ul>
@@ -175,7 +177,8 @@
                     <li class="nav-item my-auto">
                         <form method="post" th:action="@{/logout}">
                             <button class="btn nav-link" type="submit">
-                                <i class="fas fa-sign-out-alt"></i> Logout
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span class="ms-1">Logout</span>
                             </button>
                         </form>
                     </li>
@@ -195,32 +198,54 @@
 
 </header>
 
-<!-- TOAST -->
+<!-- TOAST MEJORADO -->
 <section th:fragment="mostrarToast">
-    <div class="position-fixed top-50 start-50 translate-middle" style="z-index:1080;">
+    <div aria-live="polite" aria-atomic="true"
+         class="position-fixed top-50 start-50 translate-middle" style="z-index:1080;">
 
-        <div th:if="${error}" class="toast show">
-            <div class="toast-header bg-danger text-white">
-                <strong>[[#{error}]]</strong>
+        <div th:if="${error}" class="toast show"
+             role="alert"
+             aria-live="assertive"
+             aria-atomic="true"
+             data-bs-autohide="true">
+
+            <div class="toast-header text-white bg-danger">
+                <i class="fa-solid fa-bomb"></i>
+                <strong class="me-auto">[[#{error}]]</strong>
             </div>
+
             <div class="toast-body">
-                [[${error}]]
+                <p>[[${error}]]</p>
+                <div class="mt-2 pt-2 border-top text-center">
+                    <button type="button" class="btn btn-secondary btn-sm"
+                            data-bs-dismiss="toast">[[#{accion.cerrar}]]</button>
+                </div>
             </div>
         </div>
 
-        <div th:if="${todoOk}" class="toast show">
-            <div class="toast-header bg-success text-white">
-                <strong>[[#{atencion}]]</strong>
+        <div th:if="${todoOk}" class="toast show"
+             role="status"
+             aria-live="polite"
+             aria-atomic="true"
+             data-bs-autohide="true">
+
+            <div class="toast-header text-white bg-success">
+                <i class="fa-solid fa-square-check"></i>
+                <strong class="me-auto">[[#{atencion}]]</strong>
             </div>
+
             <div class="toast-body">
-                [[${todoOk}]]
+                <p>[[${todoOk}]]</p>
+                <div class="mt-2 pt-2 border-top text-center">
+                    <button type="button" class="btn btn-secondary btn-sm"
+                            data-bs-dismiss="toast">[[#{accion.cerrar}]]</button>
+                </div>
             </div>
         </div>
 
     </div>
 </section>
 
-<!-- FOOTER -->
 <footer th:fragment="footer" class="p-2 mt-5 bg-info text-white d-print-none">
     <p class="text-center">[[#{plantilla.derechos}]] &COPY;</p>
 </footer>
